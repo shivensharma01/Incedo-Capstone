@@ -11,3 +11,15 @@ sale_date,predicted_sales,model
 2024-10-01,7570175.5,RandomForestRegressor
 2024-11-01,7566488.75,RandomForestRegressor
 2024-12-01,7562169.0,RandomForestRegressor
+2025-01-01,7560780.0,RandomForestRegressor
+2025-02-01,7554308.125,RandomForestRegressor
+2025-03-01,7612218.0,RandomForestRegressor
+2025-04-01,7561726.625,RandomForestRegressor
+2025-05-01,7568645.375,RandomForestRegressor
+2025-06-01,7555754.0,RandomForestRegressor
+2025-07-01,7565995.375,RandomForestRegressor
+2025-08-01,7560324.0,RandomForestRegressor
+2025-09-01,7557168.625,RandomForestRegressor
+2025-10-01,7570175.5,RandomForestRegressor
+2025-11-01,7566488.75,RandomForestRegressor
+2025-12-01,7562169.0,RandomForestRegressor
