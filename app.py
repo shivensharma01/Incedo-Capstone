@@ -51,6 +51,16 @@ if reg_model is None:
         reg_model = md.get("RandomForestRegressor") or md.get("LinearRegression") or next(iter(md.values()))
     # else: stays None and endpoint will say it's missing
 
+# Determine forecast feature columns if available
+try:
+    if reg_model is not None and hasattr(reg_model, "feature_names_in_"):
+        forecast_cols = list(reg_model.feature_names_in_)  # sklearn preserves training column order
+    else:
+        forecast_cols = _f_all.get("feature_columns") if '_f_all' in globals() and _f_all else None
+except Exception:
+    forecast_cols = None
+
+
 # KMEANS (RFM clustering)
 km_art = _load("models/kmeans.pkl")
 if isinstance(km_art, dict):
