@@ -17,10 +17,9 @@ COPY requirements.txt .
 
 # IMPORTANT: clean conda/local/mac-specific lines before pip install
 RUN pip install --upgrade pip && \
-    sed -E '/(@ file:|^file:|\/Users\/|\/private\/|\/opt\/conda\/|\/tmp\/build\/|\/croot\/|\/work\/|macosx_)/d' requirements.txt \
+    sed -E '/(@ file:|^file:|\/Users\/|\/private\/|\/opt\/conda\/|\/tmp\/build\/|\/croot\/|\/work\/|macosx_|^tf[-_]?keras\b)/d' requirements.txt \
       > requirements.clean.txt && \
     pip install --no-cache-dir -r requirements.clean.txt
-
 COPY . .
 
 EXPOSE 8080
