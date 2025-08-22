@@ -8,17 +8,22 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-# (Optional) build tools if any wheel needs compiling; safe to keep
+# Build tools (safe to keep; needed for some wheels)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
  && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
-RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
+
+# IMPORTANT: clean conda/local/mac-specific lines before pip install
+RUN pip install --upgrade pip && \
+    sed -E '/(@ file:|^file:|\/Users\/|\/private\/|\/opt\/conda\/|\/tmp\/build\/|\/croot\/|\/work\/|macosx_)/d' requirements.txt \
+      > requirements.clean.txt && \
+    pip install --no-cache-dir -r requirements.clean.txt
 
 COPY . .
 
 EXPOSE 8080
 
-# Use sh so $PORT expands on Cloud Run; defaults to 8080 locally
+# Gunicorn entrypoint; PORT is set by Cloud Run (defaults to 8080 locally)
 CMD ["sh", "-c", "exec gunicorn --bind 0.0.0.0:${PORT:-8080} app:app"]
